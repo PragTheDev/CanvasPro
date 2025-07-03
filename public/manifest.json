@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "CanvasPro",
+  "version": "1.0",
+  "description": "Make Canvas better with smart UI and dark mode.",
+  "permissions": ["storage", "scripting"],
+  "host_permissions": ["https://*.instructure.com/*"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.instructure.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
