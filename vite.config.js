@@ -6,7 +6,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        "content.js": resolve(__dirname, "src/content.js"),
         "popup.js": resolve(__dirname, "src/popup.js"),
       },
       output: {
@@ -25,8 +24,12 @@ export default defineConfig({
           dest: ".",
         },
         {
-          src: 'src/styles.css',
-          dest: '.'
+          src: "public/styles.css",
+          dest: ".",
+        },
+        {
+          src: "public/content.js",
+          dest: ".",
         }
       ],
     }),

@@ -11,7 +11,8 @@
   "content_scripts": [
     {
       "matches": ["https://*.instructure.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["canvas.css"]
     }
   ]
 }
