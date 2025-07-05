@@ -206,11 +206,9 @@ function applyHideRecentFeedback(enabled) {
   });
 }
 
-
 chrome.storage.sync.get(["hideRecentFeedback"], (data) => {
   applyHideRecentFeedback(!!data.hideRecentFeedback);
 });
-
 
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === "sync" && "hideRecentFeedback" in changes) {
@@ -218,7 +216,41 @@ chrome.storage.onChanged.addListener((changes, area) => {
   }
 });
 
-
 chrome.storage.sync.get(["hideRecentFeedback"], (data) => {
   applyHideRecentFeedback(!!data.hideRecentFeedback);
 });
+
+function injectDashboardNotes() {
+  const container = document.getElementById("DashboardCard_Container");
+  if (!container) return;
+
+
+  if (container.querySelector("#canvaspro-dashboard-notes")) return;
+
+  const notesDiv = document.createElement("div");
+  notesDiv.id = "canvaspro-dashboard-notes";
+  notesDiv.style.margin = "16px 0";
+  notesDiv.innerHTML = `
+    <label style="font-weight:600; color:#6366f1; margin-bottom:4px; display:block;">Dashboard Notes</label>
+    <textarea id="canvaspro-notes-textarea" rows="5" style="width:100%; border-radius:8px; border:1.5px solid #e0e7ff; padding:10px; font-size:1rem; resize:vertical; background:#f5f7ff;"></textarea>
+  `;
+  container.prepend(notesDiv);
+
+
+  chrome.storage.sync.get(["dashboardNotes"], (data) => {
+    document.getElementById("canvaspro-notes-textarea").value =
+      data.dashboardNotes || "";
+  });
+
+
+  document
+    .getElementById("canvaspro-notes-textarea")
+    .addEventListener("input", (e) => {
+      chrome.storage.sync.set({ dashboardNotes: e.target.value });
+    });
+}
+
+
+injectDashboardNotes();
+const notesObserver = new MutationObserver(injectDashboardNotes);
+notesObserver.observe(document.body, { childList: true, subtree: true });
