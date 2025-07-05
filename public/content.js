@@ -1,5 +1,3 @@
-import { jsx } from "react/jsx-runtime";
-
 function applyRoundedCards(rounded) {
   document.querySelectorAll(".ic-DashboardCard").forEach((card) => {
     card.style.borderRadius = rounded ? "24px" : "";
@@ -152,4 +150,75 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area === "sync" && "selectedFont" in changes) {
     applyFont(changes.selectedFont.newValue);
   }
+});
+
+function applyDisableColorOverlay(enabled) {
+  document.querySelectorAll(".ic-DashboardCard__header_hero").forEach((el) => {
+    if (enabled) {
+      // Save original styles if not already saved
+      if (!el.dataset.origOpacity) {
+        el.dataset.origOpacity = el.style.opacity;
+      }
+      if (!el.dataset.origBg) {
+        el.dataset.origBg = el.style.background;
+      }
+      if (!el.dataset.origBgColor) {
+        el.dataset.origBgColor = el.style.backgroundColor;
+      }
+      el.style.opacity = "0";
+      el.style.background = "none";
+      el.style.backgroundColor = "transparent";
+    } else {
+      // Restore original styles if saved
+      if (el.dataset.origOpacity !== undefined) {
+        el.style.opacity = el.dataset.origOpacity;
+        delete el.dataset.origOpacity;
+      }
+      if (el.dataset.origBg !== undefined) {
+        el.style.background = el.dataset.origBg;
+        delete el.dataset.origBg;
+      }
+      if (el.dataset.origBgColor !== undefined) {
+        el.style.backgroundColor = el.dataset.origBgColor;
+        delete el.dataset.origBgColor;
+      }
+    }
+  });
+}
+
+chrome.storage.sync.get(["disableColorOverlay"], (data) => {
+  applyDisableColorOverlay(!!data.disableColorOverlay);
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "disableColorOverlay" in changes) {
+    applyDisableColorOverlay(!!changes.disableColorOverlay.newValue);
+  }
+});
+
+chrome.storage.sync.get(["disableColorOverlay"], (data) => {
+  applyDisableColorOverlay(!!data.disableColorOverlay);
+});
+
+function applyHideRecentFeedback(enabled) {
+  document.querySelectorAll(".events_list.recent_feedback").forEach((el) => {
+    el.style.display = enabled ? "none" : "";
+  });
+}
+
+
+chrome.storage.sync.get(["hideRecentFeedback"], (data) => {
+  applyHideRecentFeedback(!!data.hideRecentFeedback);
+});
+
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "hideRecentFeedback" in changes) {
+    applyHideRecentFeedback(!!changes.hideRecentFeedback.newValue);
+  }
+});
+
+
+chrome.storage.sync.get(["hideRecentFeedback"], (data) => {
+  applyHideRecentFeedback(!!data.hideRecentFeedback);
 });

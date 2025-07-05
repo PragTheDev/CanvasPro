@@ -16,7 +16,7 @@ const fontRadios = document.querySelectorAll('input[name="font"]');
 
 chrome.storage.sync.get(["selectedFont"], (data) => {
   if (data.selectedFont) {
-    fontRadios.forEach(radio => {
+    fontRadios.forEach((radio) => {
       if (radio.dataset.font === data.selectedFont) {
         radio.checked = true;
       }
@@ -24,7 +24,7 @@ chrome.storage.sync.get(["selectedFont"], (data) => {
   }
 });
 
-fontRadios.forEach(radio => {
+fontRadios.forEach((radio) => {
   radio.addEventListener("change", () => {
     if (radio.checked) {
       chrome.storage.sync.set({ selectedFont: radio.dataset.font });
@@ -77,5 +77,33 @@ chrome.storage.sync.get(["removeSidebarLogo"], (data) => {
 removeSidebarLogoToggle.addEventListener("change", () => {
   chrome.storage.sync.set({
     removeSidebarLogo: removeSidebarLogoToggle.checked,
+  });
+});
+
+const disableColorOverlayToggle = document.getElementById(
+  "toggleDisableColorOverlay"
+);
+
+chrome.storage.sync.get(["disableColorOverlay"], (data) => {
+  disableColorOverlayToggle.checked = !!data.disableColorOverlay;
+});
+
+disableColorOverlayToggle.addEventListener("change", () => {
+  chrome.storage.sync.set({
+    disableColorOverlay: disableColorOverlayToggle.checked,
+  });
+});
+
+const hideRecentFeedbackToggle = document.getElementById(
+  "toggleHideRecentFeedback"
+);
+
+chrome.storage.sync.get(["hideRecentFeedback"], (data) => {
+  hideRecentFeedbackToggle.checked = !!data.hideRecentFeedback;
+});
+
+hideRecentFeedbackToggle.addEventListener("change", () => {
+  chrome.storage.sync.set({
+    hideRecentFeedback: hideRecentFeedbackToggle.checked,
   });
 });
