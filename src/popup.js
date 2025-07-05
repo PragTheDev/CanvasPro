@@ -1,10 +1,8 @@
-// Page navigation
 const mainPage = document.getElementById("mainPage");
 const fontPage = document.getElementById("fontPage");
 const fontSettingsBtn = document.getElementById("fontSettingsBtn");
 const backBtn = document.getElementById("backBtn");
 
-// Font page navigation
 fontSettingsBtn.addEventListener("click", () => {
   mainPage.classList.add("hidden");
   fontPage.classList.remove("hidden");
@@ -14,11 +12,28 @@ backBtn.addEventListener("click", () => {
   mainPage.classList.remove("hidden");
 });
 
-// ...existing code...
+const fontRadios = document.querySelectorAll('input[name="font"]');
+
+chrome.storage.sync.get(["selectedFont"], (data) => {
+  if (data.selectedFont) {
+    fontRadios.forEach(radio => {
+      if (radio.dataset.font === data.selectedFont) {
+        radio.checked = true;
+      }
+    });
+  }
+});
+
+fontRadios.forEach(radio => {
+  radio.addEventListener("change", () => {
+    if (radio.checked) {
+      chrome.storage.sync.set({ selectedFont: radio.dataset.font });
+    }
+  });
+});
 
 const roundedCardsToggle = document.getElementById("toggleRounderCards");
 
-// Restore toggle state on popup open
 chrome.storage.sync.get(["roundedCards"], (data) => {
   roundedCardsToggle.checked = !!data.roundedCards;
 });
@@ -26,8 +41,6 @@ chrome.storage.sync.get(["roundedCards"], (data) => {
 roundedCardsToggle.addEventListener("change", () => {
   chrome.storage.sync.set({ roundedCards: roundedCardsToggle.checked });
 });
-
-//
 
 const gradientCardsToggle = document.getElementById("toggleGradientCards");
 
@@ -50,5 +63,19 @@ chrome.storage.sync.get(["hideAnnouncements"], (data) => {
 hideAnnouncementsToggle.addEventListener("change", () => {
   chrome.storage.sync.set({
     hideAnnouncements: hideAnnouncementsToggle.checked,
+  });
+});
+
+const removeSidebarLogoToggle = document.getElementById(
+  "toggleRemoveSidebarLogo"
+);
+
+chrome.storage.sync.get(["removeSidebarLogo"], (data) => {
+  removeSidebarLogoToggle.checked = !!data.removeSidebarLogo;
+});
+
+removeSidebarLogoToggle.addEventListener("change", () => {
+  chrome.storage.sync.set({
+    removeSidebarLogo: removeSidebarLogoToggle.checked,
   });
 });

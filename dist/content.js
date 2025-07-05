@@ -1,3 +1,5 @@
+import { jsx } from "react/jsx-runtime";
+
 function applyRoundedCards(rounded) {
   document.querySelectorAll(".ic-DashboardCard").forEach((card) => {
     card.style.borderRadius = rounded ? "24px" : "";
@@ -81,5 +83,73 @@ chrome.storage.sync.get(["hideAnnouncements"], (data) => {
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === "sync" && "hideAnnouncements" in changes) {
     applyHideAnnouncements(!!changes.hideAnnouncements.newValue);
+  }
+});
+
+function applyRemoveSidebarLogo(enabled) {
+  document
+    .querySelectorAll(".ic-app-header__logomark-container")
+    .forEach((el) => {
+      el.style.display = enabled ? "none" : "";
+    });
+}
+
+chrome.storage.sync.get(["removeSidebarLogo"], (data) => {
+  applyRemoveSidebarLogo(!!data.removeSidebarLogo);
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "removeSidebarLogo" in changes) {
+    applyRemoveSidebarLogo(!!changes.removeSidebarLogo.newValue);
+  }
+});
+
+const fontLinks = {
+  Inter:
+    "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap",
+  Roboto:
+    "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+  Poppins:
+    "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap",
+  "Open Sans":
+    "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap",
+  Lato: "https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap",
+  Montserrat:
+    "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
+  Nunito:
+    "https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap",
+  Merriweather:
+    "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap",
+  Oswald:
+    "https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap",
+  "Source Sans Pro":
+    "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap",
+};
+
+function applyFont(font) {
+  let oldLink = document.getElementById("canvaspro-font-link");
+  if (oldLink) oldLink.remove();
+
+  if (fontLinks[font]) {
+    const link = document.createElement("link");
+    link.id = "canvaspro-font-link";
+    link.rel = "stylesheet";
+    link.href = fontLinks[font];
+    document.head.appendChild(link);
+    document.body.style.fontFamily = `'${font}', sans-serif`;
+  } else {
+    document.body.style.fontFamily = "";
+  }
+}
+
+chrome.storage.sync.get(["selectedFont"], (data) => {
+  if (data.selectedFont) {
+    applyFont(data.selectedFont);
+  }
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "selectedFont" in changes) {
+    applyFont(changes.selectedFont.newValue);
   }
 });
