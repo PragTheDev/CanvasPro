@@ -221,36 +221,73 @@ chrome.storage.sync.get(["hideRecentFeedback"], (data) => {
 });
 
 function injectDashboardNotes() {
-  const container = document.getElementById("DashboardCard_Container");
-  if (!container) return;
+  chrome.storage.sync.get(
+    ["dashboardNotesEnabled", "dashboardNotes"],
+    (data) => {
+      const enabled = !!data.dashboardNotesEnabled;
+      const container = document.getElementById("DashboardCard_Container");
+      if (!container) return;
 
+      const existing = container.querySelector("#canvaspro-dashboard-notes");
 
-  if (container.querySelector("#canvaspro-dashboard-notes")) return;
+      // Remove notes if present and toggle is off
+      if (existing && !enabled) {
+        existing.remove();
+        return;
+      }
 
-  const notesDiv = document.createElement("div");
-  notesDiv.id = "canvaspro-dashboard-notes";
-  notesDiv.style.margin = "16px 0";
-  notesDiv.innerHTML = `
-    <label style="font-weight:600; color:#6366f1; margin-bottom:4px; display:block;">Dashboard Notes</label>
-    <textarea id="canvaspro-notes-textarea" rows="5" style="width:100%; border-radius:8px; border:1.5px solid #e0e7ff; padding:10px; font-size:1rem; resize:vertical; background:#f5f7ff;"></textarea>
-  `;
-  container.prepend(notesDiv);
+      // Only inject if enabled and not already present
+      if (enabled && !existing) {
+        const notesDiv = document.createElement("div");
+        notesDiv.id = "canvaspro-dashboard-notes";
+        notesDiv.style.margin = "16px 0";
+        notesDiv.innerHTML = `
+        <label style="font-weight:600; color:#6366f1; margin-bottom:4px; display:block;">Dashboard Notes</label>
+        <textarea id="canvaspro-notes-textarea" rows="5" style="width:100%; border-radius:8px; border:1.5px solid #e0e7ff; padding:10px; font-size:1rem; resize:vertical; background:#f5f7ff;"></textarea>
+      `;
+        container.prepend(notesDiv);
 
+        // Set textarea value from storage
+        document.getElementById("canvaspro-notes-textarea").value =
+          data.dashboardNotes || "";
 
-  chrome.storage.sync.get(["dashboardNotes"], (data) => {
-    document.getElementById("canvaspro-notes-textarea").value =
-      data.dashboardNotes || "";
-  });
-
-
-  document
-    .getElementById("canvaspro-notes-textarea")
-    .addEventListener("input", (e) => {
-      chrome.storage.sync.set({ dashboardNotes: e.target.value });
-    });
+        // Save on input
+        document
+          .getElementById("canvaspro-notes-textarea")
+          .addEventListener("input", (e) => {
+            chrome.storage.sync.set({ dashboardNotes: e.target.value });
+          });
+      }
+    }
+  );
 }
-
 
 injectDashboardNotes();
 const notesObserver = new MutationObserver(injectDashboardNotes);
 notesObserver.observe(document.body, { childList: true, subtree: true });
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "dashboardNotesEnabled" in changes) {
+    injectDashboardNotes();
+  }
+});
+
+function applyHideFooter(enabled) {
+  document.querySelectorAll(".ic-app-footer").forEach((el) => {
+    el.style.display = enabled ? "none" : "";
+  });
+}
+
+chrome.storage.sync.get(["hideFooter"], (data) => {
+  applyHideFooter(!!data.hideFooter);
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "hideFooter" in changes) {
+    applyHideFooter(!!changes.hideFooter.newValue);
+  }
+});
+
+chrome.storage.sync.get(["hideFooter"], (data) => {
+  applyHideFooter(!!data.hideFooter);
+});

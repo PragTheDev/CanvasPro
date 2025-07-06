@@ -107,3 +107,29 @@ hideRecentFeedbackToggle.addEventListener("change", () => {
     hideRecentFeedback: hideRecentFeedbackToggle.checked,
   });
 });
+
+const hideFooterToggle = document.getElementById("toggleHideFooter");
+
+chrome.storage.sync.get;
+["hideFooter"],
+  (data) => {
+    hideFooterToggle.checked = !!data.hideFooter;
+  };
+
+hideFooterToggle.addEventListener("change", () => {
+  chrome.storage.sync.set({
+    hideFooter: hideFooterToggle.checked,
+  });
+});
+
+const dashboardNotesToggle = document.getElementById("toggleDashboardNotes");
+
+chrome.storage.sync.get(["dashboardNotesEnabled"], (data) => {
+  dashboardNotesToggle.checked = !!data.dashboardNotesEnabled;
+});
+
+dashboardNotesToggle.addEventListener("change", () => {
+  chrome.storage.sync.set({
+    dashboardNotesEnabled: dashboardNotesToggle.checked,
+  });
+});
