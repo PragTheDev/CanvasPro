@@ -1,11 +1,120 @@
+/* Sidebar Glassy Modern Look */
+
 .canvaspro-better-sidebar {
-  backdrop-filter: blur(2px);
-  box-shadow: 0 4px 24px 0 rgba(99, 102, 241, 0.07) !important;
-  transition: box-shadow 0.2s, background 0.2s;
+  background: rgba(0, 0, 0, 0.535) !important;
+  backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.1) !important;
+  border-radius: 18px !important;
+  border: 1.5px solid #e0e7ff !important;
+  transition: box-shadow 0.2s, background 0.2s,
+    width 0.3s cubic-bezier(0.4, 1.6, 0.6, 1),
+    min-width 0.3s cubic-bezier(0.4, 1.6, 0.6, 1),
+    max-width 0.3s cubic-bezier(0.4, 1.6, 0.6, 1);
   width: 200px !important;
 }
 
 .canvaspro-better-sidebar ~ .ic-Layout-wrapper,
 .canvaspro-better-sidebar + .ic-Layout-wrapper {
   margin-left: 200px !important;
+  transition: margin-left 0.3s cubic-bezier(0.4, 1.6, 0.6, 1);
+}
+
+/* Menu List */
+.canvaspro-better-sidebar .ic-app-header__menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 0.5em;
+  align-items: flex-start;
+}
+
+/* Menu Items */
+.canvaspro-better-sidebar .ic-app-header__menu-list-item {
+  border-radius: 10px;
+  transition: background 0.18s, box-shadow 0.18s;
+  margin: 0 2px;
+}
+
+/* Menu Links */
+.canvaspro-better-sidebar .ic-app-header__menu-list-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px 10px 14px; /* Increased right padding */
+  border-radius: 10px;
+  font-weight: 600;
+  color: #3730a3 !important;
+  background: transparent;
+  transition: background 0.18s, color 0.18s;
+  justify-content: flex-start;
+}
+
+/* Active/Hover */
+.canvaspro-better-sidebar .ic-app-header__menu-list-link:hover,
+.canvaspro-better-sidebar
+  .ic-app-header__menu-list-item--active
+  .ic-app-header__menu-list-link {
+  background: linear-gradient(90deg, #e0e7ff 0%, #f5f7ff 100%);
+  color: #6366f1 !important;
+  box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.08);
+}
+
+/* Menu Item Icons */
+.canvaspro-better-sidebar .menu-item-icon-container {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin-right: 8px;
+  padding: 0;
+}
+
+/* Avatar image (profile photo) - remove border/shadow */
+.canvaspro-better-sidebar .ic-avatar {
+  box-shadow: none !important;
+  border: none !important;
+  background: none !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+/* SVG Icons */
+.canvaspro-better-sidebar .ic-icon-svg {
+  width: 22px;
+  height: 22px;
+  fill: #6366f1 !important;
+  display: block;
+}
+
+/* Menu Item Text */
+.canvaspro-better-sidebar .menu-item__text {
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Hide logomark if not needed */
+.canvaspro-better-sidebar .ic-app-header__logomark-container {
+  display: none !important;
+}
+
+/* Hide secondary navigation (minimize button) */
+.canvaspro-better-sidebar .ic-app-header__secondary-navigation {
+  display: none !important;
+}
+
+/* Remove border from skip link */
+.canvaspro-better-sidebar #skip_navigation_link {
+  border: none !important;
+  background: transparent !important;
+  color: #6366f1 !important;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  margin-bottom: 10px;
+  display: block;
+  text-align: left;
 }
