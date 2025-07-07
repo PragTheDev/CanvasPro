@@ -133,3 +133,15 @@ dashboardNotesToggle.addEventListener("change", () => {
     dashboardNotesEnabled: dashboardNotesToggle.checked,
   });
 });
+
+const betterSidebarToggle = document.getElementById("toggleBetterSidebar");
+
+chrome.storage.sync.get(["betterSidebar"], (data) => {
+  betterSidebarToggle.checked = !!data.betterSidebar;
+});
+
+betterSidebarToggle.addEventListener("change", () => {
+  chrome.storage.sync.set({
+    betterSidebar: betterSidebarToggle.checked,
+  });
+});

@@ -1,0 +1,11 @@
+.canvaspro-better-sidebar {
+  backdrop-filter: blur(2px);
+  box-shadow: 0 4px 24px 0 rgba(99, 102, 241, 0.07) !important;
+  transition: box-shadow 0.2s, background 0.2s;
+  width: 200px !important;
+}
+
+.canvaspro-better-sidebar ~ .ic-Layout-wrapper,
+.canvaspro-better-sidebar + .ic-Layout-wrapper {
+  margin-left: 200px !important;
+}

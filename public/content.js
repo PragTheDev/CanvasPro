@@ -1,6 +1,6 @@
 function applyRoundedCards(rounded) {
   document.querySelectorAll(".ic-DashboardCard").forEach((card) => {
-    card.style.borderRadius = rounded ? "24px" : "";
+    card.style.borderRadius = rounded ? "18px" : "";
   });
 }
 
@@ -230,7 +230,6 @@ function injectDashboardNotes() {
 
       const existing = container.querySelector("#canvaspro-dashboard-notes");
 
-     
       if (existing && !enabled) {
         existing.remove();
         return;
@@ -245,7 +244,6 @@ function injectDashboardNotes() {
         <textarea id="canvaspro-notes-textarea" rows="5" style="width:100%; border-radius:8px; border:1.5px solid #e0e7ff; padding:10px; font-size:1rem; resize:vertical; background:#f5f7ff;"></textarea>
       `;
         container.prepend(notesDiv);
-
 
         document.getElementById("canvaspro-notes-textarea").value =
           data.dashboardNotes || "";
@@ -288,4 +286,25 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
 chrome.storage.sync.get(["hideFooter"], (data) => {
   applyHideFooter(!!data.hideFooter);
+});
+
+function applyBetterSidebar(enabled) {
+  const sidebar = document.querySelector(".ic-app-header");
+  if (!sidebar) return;
+
+  if (enabled) {
+    sidebar.classList.add("canvaspro-better-sidebar");
+  } else {
+    sidebar.classList.remove("canvaspro-better-sidebar");
+  }
+}
+
+chrome.storage.sync.get(["betterSidebar"], (data) => {
+  applyBetterSidebar(!!data.betterSidebar);
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "betterSidebar" in changes) {
+    applyBetterSidebar(!!changes.betterSidebar.newValue);
+  }
 });

@@ -1,6 +1,6 @@
 function applyRoundedCards(rounded) {
   document.querySelectorAll(".ic-DashboardCard").forEach((card) => {
-    card.style.borderRadius = rounded ? "24px" : "";
+    card.style.borderRadius = rounded ? "18px" : "";
   });
 }
 
@@ -230,13 +230,11 @@ function injectDashboardNotes() {
 
       const existing = container.querySelector("#canvaspro-dashboard-notes");
 
-      // Remove notes if present and toggle is off
       if (existing && !enabled) {
         existing.remove();
         return;
       }
 
-      // Only inject if enabled and not already present
       if (enabled && !existing) {
         const notesDiv = document.createElement("div");
         notesDiv.id = "canvaspro-dashboard-notes";
@@ -247,11 +245,9 @@ function injectDashboardNotes() {
       `;
         container.prepend(notesDiv);
 
-        // Set textarea value from storage
         document.getElementById("canvaspro-notes-textarea").value =
           data.dashboardNotes || "";
 
-        // Save on input
         document
           .getElementById("canvaspro-notes-textarea")
           .addEventListener("input", (e) => {
@@ -290,4 +286,25 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
 chrome.storage.sync.get(["hideFooter"], (data) => {
   applyHideFooter(!!data.hideFooter);
+});
+
+function applyBetterSidebar(enabled) {
+  const sidebar = document.querySelector(".ic-app-header");
+  if (!sidebar) return;
+
+  if (enabled) {
+    sidebar.classList.add("canvaspro-better-sidebar");
+  } else {
+    sidebar.classList.remove("canvaspro-better-sidebar");
+  }
+}
+
+chrome.storage.sync.get(["betterSidebar"], (data) => {
+  applyBetterSidebar(!!data.betterSidebar);
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "betterSidebar" in changes) {
+    applyBetterSidebar(!!changes.betterSidebar.newValue);
+  }
 });
