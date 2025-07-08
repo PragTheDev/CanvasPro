@@ -1,4 +1,5 @@
 # CanvasPro
 A more aesthetic and productive experience for Canvas LMS.
 
-![screenshot](screenshot.png)
+![webpage](screenshot.png)
+![extension](screenshot2.png)
