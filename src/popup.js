@@ -145,3 +145,15 @@ betterSidebarToggle.addEventListener("change", () => {
     betterSidebar: betterSidebarToggle.checked,
   });
 });
+
+const darkModeToggle = document.getElementById("toggleDarkMode");
+
+chrome.storage.sync.get(["darkMode"], (data) => {
+  darkModeToggle.checked = !!data.darkMode;
+});
+
+darkModeToggle.addEventListener("change", () => {
+  chrome.storage.sync.set({
+    darkMode: darkModeToggle.checked,
+  });
+});

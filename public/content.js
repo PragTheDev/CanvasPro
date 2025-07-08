@@ -308,3 +308,52 @@ chrome.storage.onChanged.addListener((changes, area) => {
     applyBetterSidebar(!!changes.betterSidebar.newValue);
   }
 });
+
+function applyDarkMode(enabled) {
+  let darkStyle = document.getElementById("canvaspro-darkmode-style");
+  if (enabled) {
+    if (!darkStyle) {
+      darkStyle = document.createElement("style");
+      darkStyle.id = "canvaspro-darkmode-style";
+      darkStyle.textContent = `
+        body, .Button, .ic-app-header, .ic-DashboardCard, .ic-Layout-wrapper, .ic-app-footer, .navigation-tray-container, .ic-DashboardCard__header_content, .css-101cswf-view-flexItem {
+          background:rgb(34, 34, 34) !important;
+         
+        }
+        .ic-DashboardCard, .ic-Layout-wrapper, .ic-app-header, .ic-app-footer, .tray-with-space-for-global-nav {
+          border-color: #23272f !important;
+        }
+        a, .ic-app-header__menu-list-link, .ic-DashboardCard__header_title, .css-itfdza-text, .css-1ctvu2o-text, .css-h7tmoq-text, .css-o7uq3r-view-heading, .css-o7uq3r-view-heading, .css-o7uq3r-view-heading {
+          color: #a5b4fc !important;
+        }
+         
+        .ic-Dashboard-header, .ic-Dashboard-header__layout{
+            background:rgb(34, 34, 34) !important;
+            color: white !important;
+        }
+            #canvaspro-notes-textarea{
+            background:rgb(60, 51, 90) !important;
+    }
+
+          .Sidebar__TodoListContainer :not([class]),  .css-yl8ee1-view--inlineBlock-inlineListItem, .css-8bodfv-text {
+        color: #fff !important;
+      }
+            
+ 
+      `;
+      document.head.appendChild(darkStyle);
+    }
+  } else {
+    if (darkStyle) darkStyle.remove();
+  }
+}
+
+chrome.storage.sync.get(["darkMode"], (data) => {
+  applyDarkMode(!!data.darkMode);
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "darkMode" in changes) {
+    applyDarkMode(!!changes.darkMode.newValue);
+  }
+});

@@ -1,5 +1,3 @@
-/* Sidebar Glassy Modern Look */
-
 .canvaspro-better-sidebar {
   background: rgba(0, 0, 0, 0.535) !important;
   backdrop-filter: blur(12px) saturate(1.2);
@@ -19,7 +17,6 @@
   transition: margin-left 0.3s cubic-bezier(0.4, 1.6, 0.6, 1);
 }
 
-/* Menu List */
 .canvaspro-better-sidebar .ic-app-header__menu-list {
   display: flex;
   flex-direction: column;
@@ -28,19 +25,17 @@
   align-items: flex-start;
 }
 
-/* Menu Items */
 .canvaspro-better-sidebar .ic-app-header__menu-list-item {
   border-radius: 10px;
   transition: background 0.18s, box-shadow 0.18s;
   margin: 0 2px;
 }
 
-/* Menu Links */
 .canvaspro-better-sidebar .ic-app-header__menu-list-link {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 24px 10px 14px; /* Increased right padding */
+  padding: 10px 24px 10px 14px;
   border-radius: 10px;
   font-weight: 600;
   color: #3730a3 !important;
@@ -49,7 +44,6 @@
   justify-content: flex-start;
 }
 
-/* Active/Hover */
 .canvaspro-better-sidebar .ic-app-header__menu-list-link:hover,
 .canvaspro-better-sidebar
   .ic-app-header__menu-list-item--active
@@ -59,7 +53,6 @@
   box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.08);
 }
 
-/* Menu Item Icons */
 .canvaspro-better-sidebar .menu-item-icon-container {
   width: 32px;
   height: 32px;
@@ -73,7 +66,6 @@
   padding: 0;
 }
 
-/* Avatar image (profile photo) - remove border/shadow */
 .canvaspro-better-sidebar .ic-avatar {
   box-shadow: none !important;
   border: none !important;
@@ -82,7 +74,6 @@
   padding: 0 !important;
 }
 
-/* SVG Icons */
 .canvaspro-better-sidebar .ic-icon-svg {
   width: 22px;
   height: 22px;
@@ -90,24 +81,20 @@
   display: block;
 }
 
-/* Menu Item Text */
 .canvaspro-better-sidebar .menu-item__text {
   font-size: 1.08rem;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
-/* Hide logomark if not needed */
 .canvaspro-better-sidebar .ic-app-header__logomark-container {
   display: none !important;
 }
 
-/* Hide secondary navigation (minimize button) */
 .canvaspro-better-sidebar .ic-app-header__secondary-navigation {
   display: none !important;
 }
 
-/* Remove border from skip link */
 .canvaspro-better-sidebar #skip_navigation_link {
   border: none !important;
   background: transparent !important;
