@@ -3,7 +3,9 @@ A more aesthetic and productive experience for Canvas LMS.
 
 ![webpage](screenshot.png)
 ![extension](screenshot2.png)
-![demo](demovideo.mp4)
+
+
+Link To Demo : https://drive.google.com/file/d/1R9LdUmFp055FEeB9huzUFe0JKefTjzQj/view?usp=sharing
 
 
 ## 📦 How to Install
