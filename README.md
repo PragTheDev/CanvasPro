@@ -3,6 +3,7 @@ A more aesthetic and productive experience for Canvas LMS.
 
 ![webpage](screenshot.png)
 ![extension](screenshot2.png)
+![demo](demovideo.mp4)
 
 
 ## 📦 How to Install
@@ -22,7 +23,7 @@ A more aesthetic and productive experience for Canvas LMS.
 
 4. **Load the Extension**
    - Click **Load unpacked**
-   - Select the folder where you extracted or cloned the repo
+   - Select the folder where you extracted or cloned the repo and navigate to the dist folder
 
 5. **Visit Canvas**
    - Navigate to your Canvas dashboard (example: https://katyisd.instructure.com)
